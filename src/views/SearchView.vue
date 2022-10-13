@@ -2,12 +2,16 @@
   <div>
     <p><input type="text" v-model="keyword"><button>検索</button></p>
     <hr>
-    <p>国旗一覧</p>
-    <flag :iso="countriesData[0].alpha2" />
-        <ul v-for="(SearchedCountry, num) in filterdCountries" :key="SearchedCountry.id">
-          <li @click="detail(SearchedCountry.ja_name)" class="hover:bg-gray-300"> {{ SearchedCountry.ja_name }} {{ num }}</li>
 
-        </ul>
+          {{ this.$route.params.id }}
+          <p>{{ this.$store.state.messe }}</p>
+          <p>{{ filterdCountries2 }}</p>
+
+      <ul v-for="SearchedCountry in filterdCountries" :key="SearchedCountry.id">
+        <li @click="detail(SearchedCountry.ja_name)" class="hover:bg-gray-300">
+          <span class="text-5xl"><flag :iso="SearchedCountry.alpha2" class='mb-10 rounded-full' /></span> {{ SearchedCountry.ja_name }}
+        </li>
+      </ul>
   </div>
 </template>
 
@@ -18,7 +22,6 @@ export default {
   data() {
     return {
       countriesData: countries,
-      filteredCountry: [],
       keyword: '',
     }
   },
@@ -35,7 +38,20 @@ export default {
       }
     }
     return a;
+    },
+    filterdCountries2() {
+      const a = [];
+
+      for( let i = 0; i < this.countriesData.length; i++) {
+        
+        const b = this.countriesData[i]
+
+        if (b.ja_name === this.$store.state.messe) {
+          a.push(b);
+      }
     }
+    return a;
+    },
   },
   methods: {
     detail(n) {
