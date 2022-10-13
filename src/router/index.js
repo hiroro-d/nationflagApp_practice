@@ -21,7 +21,7 @@ const routes = [
     component: () => import('../views/SearchView.vue')
   } ,
   {
-    path: '/DetailView',
+    path: '/DetailView/:hoge',
     name: 'DetailView',
     component: () => import('../views/DetailView.vue')
   },

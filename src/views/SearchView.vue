@@ -1,15 +1,13 @@
 <template>
   <div>
-    <p><input type="text" v-model="keyword"><button @click="search">検索</button></p>
+    <p><input type="text" v-model="keyword"><button>検索</button></p>
     <hr>
     <p>国旗一覧</p>
     <flag :iso="countriesData[0].alpha2" />
+        <ul v-for="(SearchedCountry, num) in filterdCountries" :key="SearchedCountry.id">
+          <li @click="detail(SearchedCountry.ja_name)" class="hover:bg-gray-300"> {{ SearchedCountry.ja_name }} {{ num }}</li>
 
-    <table>
-        <tr v-for="user in filterdCountries" :key="user.id">
-            <td v-text="user.ja_name"></td>
-        </tr>
-    </table>
+        </ul>
   </div>
 </template>
 
@@ -21,39 +19,40 @@ export default {
     return {
       countriesData: countries,
       filteredCountry: [],
-      keyword: "",
-      hensuu: 0
+      keyword: '',
     }
   },
   computed: {
     filterdCountries() {
       const a = [];
 
-      for( const i in this.a) {
+      for( let i = 0; i < this.countriesData.length; i++) {
+        
+        const b = this.countriesData[i]
 
-        const b = this.a[i]
-
-      if (this.countriesData.indexOf(this.keyword) !== -1) {
-        a.push(b);
+        if (b.ja_name.indexOf(this.keyword) !== -1) {
+          a.push(b);
       }
     }
     return a;
     }
   },
   methods: {
-    search() {
-      console.log("あ")
-      if ( this.keyword === this.countriesData[this.hensuu].ja_name ) {
-        console.log("ok")
-      } else {
-        console.log("そんな国はありません")
-      }
+    detail(n) {
+      //console.log(n)
+      this.$store.commit('detail', n)
     }
+    //クリックしたら数字取得してミューテーションに飛ばす
   }
 }
 
 //インプットをv-modelでkeywordに入れる。
 //keywordを元にcountriesDataをフィルタリングし、filteredに入れる。
 //filteredに入れた国をv-forで表示する。
+
+//国名をクリック→詳細ページを表示
+//ルーターリンクで飛ばす→飛んだ先はクリックした国名の情報をcomputedに渡して表示
+//クリックした国のnumericを取得、その数字をvuexの変数に入れる、詳細ページでその変数を取り出す、
+//その変数の国の詳細を表示する
 </script>
 
