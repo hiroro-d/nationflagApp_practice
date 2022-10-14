@@ -4,6 +4,7 @@
     {{ this.$route.params.id }}
     <p>{{ this.$store.state.messe }}</p>
     <p>{{ filterdCountries }}</p>
+    <p>{{ filterdCountries }}</p>
 
     <ul v-for="SearchedCountry in filterdCountries2" :key="SearchedCountry.id">
       <li @click="detail(SearchedCountry.ja_name)" class="hover:bg-gray-300">
@@ -55,7 +56,7 @@ export default {
       }
       return a;
       } else {
-        return 'a'
+        return 'ここにが入るよ'
       }
     }
   },
